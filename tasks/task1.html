@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ukr">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="../css/style.css">
+   <title>Завдання 1</title>
+</head>
+
+<body>
+   <main class="page">
+      <section class="block">
+         <div class="block__container">
+            <h1 class="block__title">Обов'язкове завдання 1</h1>
+            <div class="block__body">
+               <a href="../index.html" class="block__link">Повернутися до index.html</a>
+            </div>
+         </div>
+      </section>
+   </main>
+   <script>
+      function getRandomNum(minVal, maxVal) {
+         return minVal + Math.floor(Math.random() * (maxVal - minVal + 1))
+      }
+      function getRandomArray(numOfValues, minVal, maxVal) {
+         let arr = new Array(numOfValues).fill(0).map(() => getRandomNum(minVal, maxVal))
+         return arr
+      }
+
+      const priceHistory = getRandomArray(12, 1, 10000)
+      // Сформувати новий масив, у якому є тільки ті, що більші за 1000 грн.
+      const pricesGreaterThan1000 = priceHistory.filter(price => price > 1000)
+
+      // Сформувати новий масив, у якому є номери тільки тих, що більші за 1000 грн.
+      const numbersPricesGreaterThan1000 = priceHistory.reduce((result, price, index) => {
+         if (price > 1000)
+            return [...result, index]
+         return result
+      }, [])
+
+      // Сформувати список з тих цін, які більші за попереднє значення
+      const pricesBiggerThanPrev = priceHistory.reduce((result, currentPrice, index, arrRef) => {
+         const nextElem = arrRef[index + 1]
+         if (nextElem > currentPrice) result.push(nextElem)
+         return result
+      }, [])
+
+      // Сформувати новий масив, що міститиме значення цін у відсотках стосовно максимального
+      const maxPrice = Math.max(...priceHistory)
+      const pricesInPercents = priceHistory.map(elem => Math.round(elem / maxPrice * 100))
+
+      // Підрахувати кількість змін цін
+      const countOfChanges = priceHistory.reduce(([counter, prevPrice], currentPrice) => {
+         if (prevPrice !== null && prevPrice !== currentPrice) {
+            counter++
+         }
+         return [counter, currentPrice]
+      }, [0, null])[0];
+
+      // Визначити, чи є ціна, що менше 1000
+      const priceLessThan1000 = priceHistory.some(price => price < 1000)
+
+      // Визначати, чи усі ціни більше за 1000
+      const allPricesBiggerThan1000 = priceHistory.every(price => price > 1000)
+
+      // Підрахувати кількість цін, що більше за 1000
+      const pricesBiggerThan1000Counter = priceHistory.reduce((counter, price) => (price > 1000) ? ++counter : counter, 0)
+
+      // Підрахувати суму цін, що більше за 1000
+      const pricesBiggerThan1000Sum = priceHistory.reduce((pricesSum, price) => (price > 1000) ? pricesSum += price : pricesSum, 0)
+
+      // Знайти першу ціну, що більше за 1000
+      const firstPriceBiggerThan1000 = priceHistory.find(price => price > 1000)
+
+      // Знайти індекс першої ціни, що більше за 1000
+      const indexFirstPriceBiggerThan1000 = priceHistory.findIndex(price => price > 1000)
+
+      // Знайти останню ціну, що більше за 1000
+      const lastPriceBiggerThan1000 = priceHistory.findLast(price => price > 1000)
+
+      // Знайти індекс останньої ціни, що більше за 1000
+      const indexLastPriceBiggerThan1000 = priceHistory.findLastIndex(price => price > 1000)
+
+      document.write(`
+         <div class="text">Початковий масив: ${priceHistory}</div>
+         <div class="text">Більші за 1000 грн: ${pricesGreaterThan1000}</div>
+         <div class="text">Номери тільки тих, що більші за 1000 грн: ${numbersPricesGreaterThan1000}</div>
+         <div class="text">Більші за попереднє значення: ${pricesBiggerThanPrev}</div>
+         <div class="text">Значення цін у відсотках стосовно максимального: ${pricesInPercents}</div>
+         <div class="text">Кількість змін цін: ${countOfChanges}</div>
+         <div class="text">Чи є ціна, що менше 1000: ${priceLessThan1000}</div>
+         <div class="text">Чи усі ціни більше за 1000: ${allPricesBiggerThan1000}</div>
+         <div class="text">Кількість цін, що більше за 1000: ${pricesBiggerThan1000Counter}</div>
+         <div class="text">Cума цін, що більше за 1000: ${pricesBiggerThan1000Sum}</div>
+         <div class="text">Перша ціна, що більша за 1000: ${firstPriceBiggerThan1000}</div>
+         <div class="text">Індекс першої ціни, що більша за 1000: ${indexFirstPriceBiggerThan1000}</div>
+         <div class="text">Остання ціна, що більше за 1000, що більша за 1000: ${lastPriceBiggerThan1000}</div>
+         <div class="text">Індекс останньої ціни, що більша за 1000: ${indexLastPriceBiggerThan1000}</div>
+      `)
+   </script>
+</body>
+
+</html>
