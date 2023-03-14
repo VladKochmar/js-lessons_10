@@ -25,7 +25,12 @@
          return minVal + Math.floor(Math.random() * (maxVal - minVal + 1))
       }
       function getRandomArray(numOfValues, minVal, maxVal) {
-         let arr = new Array(numOfValues).fill(0).map(() => getRandomNum(minVal, maxVal))
+         let arr = []
+
+         for (let i = 0; i < numOfValues; i++) {
+            arr[i] = getRandomNum(minVal, maxVal)
+         }
+
          return arr
       }
 
@@ -36,7 +41,7 @@
       // Сформувати новий масив, у якому є номери тільки тих, що більші за 1000 грн.
       const numbersPricesGreaterThan1000 = priceHistory.reduce((result, price, index) => {
          if (price > 1000)
-            return [...result, index]
+            result.push(index)
          return result
       }, [])
 
